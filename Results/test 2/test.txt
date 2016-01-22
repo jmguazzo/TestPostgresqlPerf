@@ -1,0 +1,468 @@
+Scenarios
+
+Scale of 500
+a.1 - init pgbench 
+a.2 - run locally pgbench for 240 seconds.
+a.3 - run locally pgbench for 240 seconds for 42 clients.
+a.4 - run locally pgbench for 240 seconds for 42 clients with 21 threads.
+a.5 - Set max_connections to 300 and restart postgresql
+a.6 - run locally pgbench for 240 seconds for 42 clients with 21 threads.
+a.7 - run from The Client for 240 seconds for 42 clients with 21 threads. 
+
+Scale of 1000
+b.1 - init pgbench 
+b.2 - restart postgresql
+b.3 - run from The Client for 240 seconds for 42 clients with 21 threads. 
+b.4 - run from The Client for 1200 seconds for 42 clients with 21 threads. 
+
+Scale of 2000
+c.1 - init pgbench 
+c.2 - restart postgresql
+c.3 - run from The Client for 2400 seconds for 250 clients with 125 threads. 
+
+
+a.1
+
+INIT PgBench 500
+
+local
+50000000 of 50000000 tuples (100%) done (elapsed 118.58 s, remaining 0.00 s).
+
+
+WServeur
+50000000 of 50000000 tuples (100%) done (elapsed 59.88 s, remaining 0.00 s).
+
+LServeur
+50000000 of 50000000 tuples (100%) done (elapsed 48.87 s, remaining 0.00 s).
+
+
+
+a.2
+Results 127.0.0.1 1client, 1 thread
+
+Local
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 1
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 7769
+latency average: 30.892 ms
+tps = 32.366134 (including connections establishing)
+tps = 32.373123 (excluding connections establishing)
+
+
+WServeur 127.0.0.1
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 1
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 128472
+latency average: 1.868 ms
+tps = 535.278082 (including connections establishing)
+tps = 535.299598 (excluding connections establishing)
+
+LServeur
+[ec2-user@ip-172-31-39-60 lib]$ pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 1
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 109535
+latency average: 2.191 ms
+tps = 456.395371 (including connections establishing)
+tps = 456.397940 (excluding connections establishing)
+
+a.3
+Results 127.0.0.1 42clients, 1 thread
+Local
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 22585
+latency average: 446.314 ms
+tps = 93.902394 (including connections establishing)
+tps = 94.305123 (excluding connections establishing)
+
+
+
+WServeur 127.0.0.1
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T
+240 -s 500  -c 42
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 328471
+latency average: 30.688 ms
+tps = 1301.173379 (including connections establishing)
+tps = 1304.544536 (excluding connections establishing)
+
+LServeur
+[ec2-user@ip-172-31-39-60 lib]$ pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 1
+duration: 240 s
+number of transactions actually processed: 320108
+latency average: 31.489 ms
+tps = 1333.040735 (including connections establishing)
+tps = 1333.348079 (excluding connections establishing)
+
+
+a.4
+Results 127.0.0.1 42 clients, 21 threads
+
+Local 
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 14535
+latency average: 693.498 ms
+tps = 60.454964 (including connections establishing)
+tps = 60.533812 (excluding connections establishing)
+
+WServeur 127.0.0.1
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T
+240 -s 500  -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 382147
+latency average: 26.377 ms
+tps = 1592.058591 (including connections establishing)
+tps = 1593.150698 (excluding connections establishing)
+
+
+LServeur
+[ec2-user@ip-172-31-39-60 lib]$ pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 365494
+latency average: 27.579 ms
+tps = 1522.280775 (including connections establishing)
+tps = 1522.487637 (excluding connections establishing)
+
+
+a.5
+max_connections 300
+
+restart
+
+a.6
+WServeur 127.0.0.1
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 421287
+latency average: 23.927 ms
+tps = 1714.345975 (including connections establishing)
+tps = 1715.473675 (excluding connections establishing)
+
+LServeur 1270.0.1
+[root@ip-172-31-39-60 init.d]# pgbench -h 127.0.0.1 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 399478
+latency average: 25.233 ms
+tps = 1663.430897 (including connections establishing)
+tps = 1663.673729 (excluding connections establishing)
+
+a.7
+Client 42 clients, 21 threads
+WServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.41.48 -U postgres -p 5432 -T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 468761
+latency average: 21.503 ms
+tps = 1952.864613 (including connections establishing)
+tps = 1954.374902 (excluding connections establishing)
+
+LServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.39.60 -U postgres -p 5432
+-T 240 -s 500 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 500
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 500
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 425839
+latency average: 23.671 ms
+tps = 1774.015768 (including connections establishing)
+tps = 1774.242431 (excluding connections establishing)
+
+
+b.1
+INIT PgBench 1000
+
+WServeur
+100000000 of 100000000 tuples (100%) done (elapsed 115.18 s, remaining 0.00 s).
+
+LServeur
+100000000 of 100000000 tuples (100%) done (elapsed 120.97 s, remaining 0.00 s).
+
+b.2
+restart
+
+
+b.3
+WServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.41.48 -U postgres -p 5432 -T 240 -s 1000 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 1000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 1000
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 291803
+latency average: 34.544 ms
+tps = 1204.896760 (including connections establishing)
+tps = 1205.596962 (excluding connections establishing)
+
+LServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.39.60 -U postgres -p 5432
+-T 240 -s 1000 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 1000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 1000
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 240 s
+number of transactions actually processed: 294441
+latency average: 34.234 ms
+tps = 1226.202180 (including connections establishing)
+tps = 1226.310531 (excluding connections establishing)
+
+
+b.4
+
+WServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.41.48 -U postgres -p 5432
+-T 1200 -s 1000 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 1000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 1000
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 1200 s
+number of transactions actually processed: 751647
+latency average: 67.053 ms
+tps = 626.310401 (including connections establishing)
+tps = 626.420097 (excluding connections establishing)
+
+
+LServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.39.60 -U postgres -p 5432
+-T 1200 -s 1000 -c 42 -j 21
+Password:
+Scale option ignored, using pgbench_branches table count = 1000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 1000
+query mode: simple
+number of clients: 42
+number of threads: 21
+duration: 1200 s
+number of transactions actually processed: 1077216
+latency average: 46.787 ms
+tps = 896.423751 (including connections establishing)
+tps = 896.449377 (excluding connections establishing)
+
+
+c.1
+INIT PgBench 2000
+(DB Size +-30gb)
+
+WServeur
+200000000 of 200000000 tuples (100%) done (elapsed 261.00 s, remaining 0.00 s).
+
+LServeur
+200000000 of 200000000 tuples (100%) done (elapsed 264.69 s, remaining 0.00 s).
+
+c.2
+restart
+
+
+c.3
+250 clients, 125jobs et 2400 sec (40min)
+
+WServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.44.121 -U postgres -p 5432
+ -T 2400 -s 2000 -c 250 -j 125
+Password:
+Scale option ignored, using pgbench_branches table count = 2000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 2000
+query mode: simple
+number of clients: 250
+number of threads: 125
+duration: 2400 s
+number of transactions actually processed: 1296582
+latency average: 462.755 ms
+tps = 540.077467 (including connections establishing)
+tps = 540.288422 (excluding connections establishing)
+
+
+LServeur
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.39.60 -U postgres -p 5432 -T 2400 -s 2000 -c 250 -j 125
+Password:
+Scale option ignored, using pgbench_branches table count = 2000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 2000
+query mode: simple
+number of clients: 250
+number of threads: 125
+duration: 2400 s
+number of transactions actually processed: 773482
+latency average: 775.713 ms
+tps = 321.737798 (including connections establishing)
+tps = 321.782886 (excluding connections establishing)
+
+
+c.3.2
+
+
+pgbench -h 172.31.35.125 -U postgres -p 5432 -s 2000 -i -q
+
+200000000 of 200000000 tuples (100%) done (elapsed 264.67 s, remaining 0.00 s).
+
+Lserveur
+[ec2-user@ip-172-31-35-125 ~]$ sudo service postgresql94 restart
+Stopping postgresql94 service:                             [  OK  ]
+Starting postgresql94 service:                             [  OK  ]
+
+WClient
+
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.35.125 -U postgres -p 5432 -s 2000 -c 250 -j 125 -T 2400
+Password:
+Scale option ignored, using pgbench_branches table count = 2000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 2000
+query mode: simple
+number of clients: 250
+number of threads: 125
+duration: 2400 s
+number of transactions actually processed: 844387
+latency average: 710.575 ms
+tps = 351.734525 (including connections establishing)
+tps = 351.797461 (excluding connections establishing)
+
+
+pgbench -h 172.31.43.203 -U postgres -p 5432 -s 2000 -i -q
+
+200000000 of 200000000 tuples (100%) done (elapsed 253.95 s, remaining 0.00 s).
+
+C:\Users\Administrator>net stop postgresql-x64-9.4
+The postgresql-x64-9.4 service is stopping.
+The postgresql-x64-9.4 service was stopped successfully.
+C:\Users\Administrator>net start postgresql-x64-9.4
+The postgresql-x64-9.4 service is starting.
+The postgresql-x64-9.4 service was started successfully.
+
+C:\Program Files\PostgreSQL\9.4\bin>pgbench -h 172.31.43.203 -U postgres -p 5432 -s 2000 -c 250 -j 125 -T 2400
+Password:
+Scale option ignored, using pgbench_branches table count = 2000
+starting vacuum...end.
+transaction type: TPC-B (sort of)
+scaling factor: 2000
+query mode: simple
+number of clients: 250
+number of threads: 125
+duration: 2400 s
+number of transactions actually processed: 1303677
+latency average: 460.237 ms
+tps = 542.901277 (including connections establishing)
+tps = 543.183647 (excluding connections establishing)
